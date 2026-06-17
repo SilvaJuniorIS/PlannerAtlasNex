@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" role="img" aria-labelledby="title desc">
+  <title id="title">ISJ AtlasNex</title>
+  <desc id="desc">Logo textual ISJ em fundo premium escuro e dourado.</desc>
+  <rect width="128" height="128" rx="18" fill="#0b1020"/>
+  <path d="M14 100V28l50-16 50 16v72L64 116 14 100Z" fill="#111827" stroke="#d4af37" stroke-width="5"/>
+  <path d="M33 83V46h10v37H33Zm20 0V46h24c9 0 15 5 15 13 0 6-3 10-9 12l12 12H82L72 72h-9v11H53Zm10-20h13c4 0 6-2 6-5s-2-5-6-5H63v10Z" fill="#f8fafc"/>
+  <path d="M31 92h66" stroke="#38bdf8" stroke-width="6" stroke-linecap="round"/>
+</svg>

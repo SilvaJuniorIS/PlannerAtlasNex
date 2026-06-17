@@ -1,0 +1,17 @@
+{
+  "name": "AtlasNex Action Planner",
+  "short_name": "AtlasNex",
+  "description": "Calendário, checklist e Kanban para executar o plano AtlasNex.",
+  "start_url": "./",
+  "display": "standalone",
+  "background_color": "#0b1020",
+  "theme_color": "#0b1020",
+  "icons": [
+    {
+      "src": "assets/logo-isj.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}

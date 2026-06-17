@@ -1,0 +1,65 @@
+[
+  {
+    "title": "Definir a promessa central da AtlasNex",
+    "offsetDays": 0,
+    "category": "AtlasNex",
+    "priority": "high",
+    "revenue": 0,
+    "notes": "Escrever uma frase clara: quem ajudamos, que dor resolvemos e qual resultado entregamos.",
+    "stage": "idea"
+  },
+  {
+    "title": "Montar lista de 50 potenciais clientes",
+    "offsetDays": 1,
+    "category": "Prospecção",
+    "priority": "high",
+    "revenue": 0,
+    "notes": "Priorizar pequenos negócios locais, prestadores de serviço, clínicas, escritórios, imobiliárias e comércios.",
+    "stage": "todo"
+  },
+  {
+    "title": "Criar oferta Diagnóstico Digital Express",
+    "offsetDays": 2,
+    "category": "Produto",
+    "priority": "high",
+    "revenue": 297,
+    "notes": "Definir escopo, preço, entrega, prazo e modelo de relatório.",
+    "stage": "todo"
+  },
+  {
+    "title": "Publicar 5 conteúdos sobre IA prática",
+    "offsetDays": 3,
+    "category": "Conteúdo",
+    "priority": "medium",
+    "revenue": 0,
+    "notes": "Conteúdos simples: antes/depois, automação, bastidor, erro comum e oportunidade.",
+    "stage": "doing"
+  },
+  {
+    "title": "Vender primeiro projeto Atlas Flow",
+    "offsetDays": 7,
+    "category": "Entrega",
+    "priority": "high",
+    "revenue": 2000,
+    "notes": "Projeto inicial de automação para WhatsApp, formulário, CRM simples ou atendimento.",
+    "stage": "todo"
+  },
+  {
+    "title": "Criar planilha de controle financeiro da transição",
+    "offsetDays": 8,
+    "category": "Financeiro",
+    "priority": "medium",
+    "revenue": 0,
+    "notes": "Controlar receita, custos, reserva, investimentos e meta mensal.",
+    "stage": "todo"
+  },
+  {
+    "title": "Desenhar MVP SaaS a partir dos serviços vendidos",
+    "offsetDays": 21,
+    "category": "SaaS",
+    "priority": "medium",
+    "revenue": 0,
+    "notes": "Somente avançar para SaaS com base em problema validado e repetido.",
+    "stage": "idea"
+  }
+]

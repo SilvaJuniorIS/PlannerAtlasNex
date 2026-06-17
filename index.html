@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#0b1020" />
+  <meta name="description" content="Calendário, checklist e Kanban para executar o plano AtlasNex rumo a R$ 10.000 por mês em renda digital." />
+  <title>AtlasNex Action Planner</title>
+  <link rel="manifest" href="manifest.json" />
+  <link rel="icon" href="assets/logo-isj.svg" type="image/svg+xml" />
+  <link rel="stylesheet" href="css/styles.css" />
+</head>
+<body>
+  <header class="app-header">
+    <div class="topbar">
+      <a class="brand" href="#" aria-label="AtlasNex Action Planner">
+        <img class="logo" src="assets/logo-isj.svg" alt="ISJ" />
+        <span>
+          <strong>AtlasNex Action Planner</strong>
+          <small>Plano diário para chegar a R$ 10.000/mês no digital</small>
+        </span>
+      </a>
+
+      <div class="header-actions" aria-label="Ações principais">
+        <button class="btn primary" id="newTaskButton" type="button">Nova tarefa</button>
+        <button class="btn" id="exportButton" type="button">Exportar JSON</button>
+        <label class="btn file-button" for="importInput">Importar JSON</label>
+        <input id="importInput" class="sr-only" type="file" accept="application/json,.json" />
+        <button class="btn danger" id="restoreButton" type="button">Restaurar iniciais</button>
+      </div>
+    </div>
+  </header>
+
+  <main class="shell">
+    <section class="kpi-grid" aria-label="Indicadores">
+      <article class="kpi-card">
+        <span>Meta mensal</span>
+        <strong>R$ 10.000</strong>
+        <small>Receita-alvo da transição AtlasNex.</small>
+      </article>
+      <article class="kpi-card">
+        <span>Concluídas</span>
+        <strong id="doneCount">0/0</strong>
+        <div class="progress" aria-hidden="true"><i id="doneProgress"></i></div>
+      </article>
+      <article class="kpi-card">
+        <span>Receita planejada</span>
+        <strong id="plannedRevenue">R$ 0</strong>
+        <small id="revenueSplit">R$ 0 concluídos</small>
+      </article>
+      <article class="kpi-card">
+        <span>Agora</span>
+        <strong id="currentPhase">Fase 1</strong>
+        <small id="weekFocus">Fundação comercial</small>
+      </article>
+      <article class="kpi-card">
+        <span>Atrasadas</span>
+        <strong id="overdueCount">0</strong>
+        <small id="weekCount">0 tarefas nesta semana</small>
+      </article>
+    </section>
+
+    <section class="toolbar panel" aria-label="Filtros e visualização">
+      <div class="view-tabs" role="tablist" aria-label="Visualizações">
+        <button class="tab active" type="button" data-view="calendar">Calendário</button>
+        <button class="tab" type="button" data-view="checklist">Checklist</button>
+        <button class="tab" type="button" data-view="kanban">Kanban</button>
+      </div>
+
+      <div class="filters">
+        <label>
+          Categoria
+          <select id="filterCategory">
+            <option value="">Todas</option>
+          </select>
+        </label>
+        <label>
+          Status
+          <select id="filterStatus">
+            <option value="">Todos</option>
+            <option value="open">Abertas</option>
+            <option value="done">Concluídas</option>
+          </select>
+        </label>
+        <label>
+          Busca
+          <input id="filterSearch" type="search" placeholder="Título ou observação" />
+        </label>
+      </div>
+    </section>
+
+    <section class="quick-layout">
+      <aside class="panel quick-panel">
+        <div class="panel-title">
+          <h2>Ação rápida</h2>
+          <p>Capture a próxima tarefa sem perder ritmo.</p>
+        </div>
+
+        <form id="quickForm" class="form-grid">
+          <label class="wide">
+            Título
+            <input id="quickTitle" name="title" required placeholder="Ex.: Prospectar 10 empresas locais" />
+          </label>
+          <label>
+            Data
+            <input id="quickDate" name="date" type="date" required />
+          </label>
+          <label>
+            Categoria
+            <select id="quickCategory" name="category"></select>
+          </label>
+          <label>
+            Prioridade
+            <select id="quickPriority" name="priority"></select>
+          </label>
+          <label>
+            Valor previsto
+            <input id="quickRevenue" name="revenue" type="number" min="0" step="50" placeholder="0" />
+          </label>
+          <button class="btn primary wide" type="submit">Adicionar ao plano</button>
+        </form>
+
+        <div class="strategy-list" aria-label="Fases da estratégia">
+          <article>
+            <strong>Fase 1 · 0 a 30 dias</strong>
+            <span>Promessa, oferta inicial, página simples e prospecção.</span>
+          </article>
+          <article>
+            <strong>Fase 2 · 31 a 90 dias</strong>
+            <span>Clientes pagantes, cases e primeiras entregas repetíveis.</span>
+          </article>
+          <article>
+            <strong>Fase 3 · 3 a 6 meses</strong>
+            <span>Produtoização, templates, recorrência e dashboard financeiro.</span>
+          </article>
+          <article>
+            <strong>Fase 4 · 6 a 12 meses</strong>
+            <span>MVP SaaS validado pelos problemas que mais se repetem.</span>
+          </article>
+        </div>
+      </aside>
+
+      <section class="workspace">
+        <div id="calendarView" class="view active">
+          <div class="panel">
+            <div class="calendar-head">
+              <button class="btn icon" id="prevMonthButton" type="button" aria-label="Mês anterior">‹</button>
+              <h2 id="monthTitle">Calendário</h2>
+              <button class="btn icon" id="nextMonthButton" type="button" aria-label="Próximo mês">›</button>
+            </div>
+            <div id="calendar" class="calendar" aria-label="Calendário mensal"></div>
+          </div>
+        </div>
+
+        <div id="checklistView" class="view">
+          <section class="panel">
+            <div class="panel-title inline">
+              <h2>Checklist de execução</h2>
+              <p id="listSummary">0 tarefas</p>
+            </div>
+            <div id="taskList" class="task-list"></div>
+          </section>
+        </div>
+
+        <div id="kanbanView" class="view">
+          <section class="panel">
+            <div class="panel-title inline">
+              <h2>Kanban</h2>
+              <p>Ideia, a fazer, em andamento, concluído e gerou receita.</p>
+            </div>
+            <div id="kanbanBoard" class="kanban-board"></div>
+          </section>
+        </div>
+      </section>
+    </section>
+  </main>
+
+  <dialog id="taskModal" class="task-modal">
+    <form id="taskForm" method="dialog">
+      <div class="modal-head">
+        <div>
+          <h2 id="modalTitle">Nova tarefa</h2>
+          <p>Tudo é salvo automaticamente no navegador.</p>
+        </div>
+        <button class="btn icon" id="closeModalButton" type="button" aria-label="Fechar">×</button>
+      </div>
+
+      <input id="taskId" type="hidden" />
+      <div class="form-grid">
+        <label class="wide">
+          Título
+          <input id="taskTitle" required />
+        </label>
+        <label>
+          Data
+          <input id="taskDate" type="date" required />
+        </label>
+        <label>
+          Categoria
+          <select id="taskCategory"></select>
+        </label>
+        <label>
+          Prioridade
+          <select id="taskPriority"></select>
+        </label>
+        <label>
+          Etapa Kanban
+          <select id="taskStage"></select>
+        </label>
+        <label>
+          Valor previsto
+          <input id="taskRevenue" type="number" min="0" step="50" />
+        </label>
+        <label class="wide">
+          Observações
+          <textarea id="taskNotes" rows="4"></textarea>
+        </label>
+      </div>
+      <div class="modal-actions">
+        <button class="btn" id="cancelModalButton" type="button">Cancelar</button>
+        <button class="btn primary" type="submit">Salvar tarefa</button>
+      </div>
+    </form>
+  </dialog>
+
+  <script src="js/storage.js"></script>
+  <script src="js/tasks.js"></script>
+  <script src="js/calendar.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>
