@@ -1,7 +1,8 @@
-const CACHE_NAME = "atlasnex-action-planner-v1";
+const CACHE_NAME = "atlasnex-action-planner-v2";
 const ASSETS = [
   "./",
   "index.html",
+  "manual.html",
   "css/styles.css",
   "js/storage.js",
   "js/tasks.js",

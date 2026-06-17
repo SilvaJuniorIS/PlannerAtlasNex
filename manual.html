@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#0b1020" />
+  <meta name="description" content="Manual detalhado do AtlasNex Action Planner: calendário, checklist, Kanban, métricas, backup e rotina de execução." />
+  <title>Manual | AtlasNex Action Planner</title>
+  <link rel="manifest" href="manifest.json" />
+  <link rel="icon" href="assets/logo-isj.svg" type="image/svg+xml" />
+  <link rel="stylesheet" href="css/styles.css" />
+  <style>
+    .manual-shell { width: min(1180px, 94vw); margin: 26px auto 76px; }
+    .manual-hero {
+      display: grid;
+      grid-template-columns: minmax(0, 1.1fr) minmax(280px, 0.9fr);
+      gap: 24px;
+      align-items: center;
+      padding: 26px;
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      background: rgba(17, 24, 39, 0.9);
+      box-shadow: var(--shadow);
+    }
+    .manual-hero h1 {
+      margin: 0;
+      color: var(--gold);
+      font-size: clamp(2rem, 5vw, 4.1rem);
+      line-height: 1;
+    }
+    .manual-hero p,
+    .manual-section p,
+    .manual-section li,
+    .manual-card p,
+    .manual-step p {
+      color: var(--muted);
+      line-height: 1.65;
+    }
+    .manual-hero p { max-width: 720px; margin: 16px 0 0; font-size: 1.06rem; }
+    .manual-actions { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 20px; }
+    .manual-illustration {
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      background: linear-gradient(180deg, rgba(56, 189, 248, 0.08), rgba(212, 175, 55, 0.08));
+      padding: 12px;
+    }
+    .manual-nav {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 10px;
+      margin: 18px 0;
+    }
+    .manual-nav a,
+    .manual-card,
+    .manual-step,
+    .callout {
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      background: rgba(255, 255, 255, 0.045);
+    }
+    .manual-nav a { padding: 13px; color: var(--text); font-weight: 900; }
+    .manual-nav a span {
+      display: block;
+      margin-top: 4px;
+      color: var(--soft);
+      font-size: 0.84rem;
+      font-weight: 700;
+    }
+    .manual-section {
+      margin-top: 18px;
+      padding: 22px;
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      background: rgba(17, 24, 39, 0.86);
+      box-shadow: var(--shadow);
+    }
+    .manual-section h2 {
+      margin: 0 0 10px;
+      color: var(--gold);
+      font-size: clamp(1.42rem, 3vw, 2rem);
+    }
+    .manual-section h3 { margin: 0 0 8px; color: var(--blue); font-size: 1.05rem; }
+    .manual-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 12px;
+      margin-top: 16px;
+    }
+    .manual-grid.two { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .manual-card,
+    .manual-step,
+    .callout { padding: 15px; }
+    .manual-card strong,
+    .manual-step strong { display: block; margin-bottom: 6px; color: var(--text); }
+    .manual-step { display: grid; grid-template-columns: auto 1fr; gap: 12px; }
+    .step-number {
+      width: 34px;
+      height: 34px;
+      display: grid;
+      place-items: center;
+      border-radius: 50%;
+      background: var(--gold);
+      color: #101827;
+      font-weight: 900;
+    }
+    .workflow {
+      display: grid;
+      grid-template-columns: repeat(5, minmax(110px, 1fr));
+      gap: 8px;
+      margin-top: 16px;
+    }
+    .workflow span {
+      min-height: 72px;
+      display: grid;
+      place-items: center;
+      padding: 10px;
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      background: rgba(56, 189, 248, 0.08);
+      color: var(--muted);
+      text-align: center;
+      font-weight: 900;
+    }
+    .callout {
+      margin-top: 16px;
+      border-color: rgba(212, 175, 55, 0.38);
+      background: rgba(212, 175, 55, 0.09);
+    }
+    .table-wrap { overflow-x: auto; margin-top: 14px; }
+    table { width: 100%; min-width: 720px; border-collapse: collapse; color: var(--muted); }
+    th, td { padding: 12px; border: 1px solid var(--border); text-align: left; vertical-align: top; }
+    th { color: var(--gold); background: rgba(255, 255, 255, 0.05); }
+    .manual-footer { margin-top: 18px; text-align: center; color: var(--soft); }
+    @media (max-width: 960px) {
+      .manual-hero,
+      .manual-grid,
+      .manual-grid.two,
+      .manual-nav { grid-template-columns: 1fr; }
+      .workflow { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    }
+    @media (max-width: 560px) {
+      .manual-hero,
+      .manual-section { padding: 16px; }
+      .manual-step { grid-template-columns: 1fr; }
+      .workflow { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+  <header class="app-header">
+    <div class="topbar">
+      <a class="brand" href="index.html" aria-label="Voltar ao AtlasNex Action Planner">
+        <img class="logo" src="assets/logo-isj.svg" alt="ISJ" />
+        <span>
+          <strong>Manual do Planner</strong>
+          <small>Guia prático de execução AtlasNex</small>
+        </span>
+      </a>
+      <div class="header-actions" aria-label="Ações do manual">
+        <a class="btn" href="index.html">Voltar ao planner</a>
+        <a class="btn primary" href="#rotina">Ver rotina semanal</a>
+      </div>
+    </div>
+  </header>
+
+  <main class="manual-shell">
+    <section class="manual-hero">
+      <div>
+        <h1>Manual de uso do AtlasNex Action Planner</h1>
+        <p>
+          Este guia mostra como transformar o planner em um painel diário de execução:
+          você planeja ações, acompanha o calendário, mede avanço, organiza o Kanban
+          e mantém backup dos dados enquanto constrói a meta de R$ 10.000/mês.
+        </p>
+        <div class="manual-actions">
+          <a class="btn primary" href="#primeiros-passos">Começar agora</a>
+          <a class="btn" href="#backup">Backup e segurança</a>
+        </div>
+      </div>
+      <div class="manual-illustration" aria-label="Ilustração do painel AtlasNex">
+        <svg viewBox="0 0 640 420" role="img" aria-labelledby="heroTitle heroDesc">
+          <title id="heroTitle">Painel ilustrado do planner</title>
+          <desc id="heroDesc">Calendário, checklist e métricas conectados em um fluxo de execução.</desc>
+          <rect x="24" y="30" width="592" height="360" rx="20" fill="#0b1020" stroke="#d4af37" stroke-width="5"/>
+          <rect x="54" y="64" width="166" height="78" rx="8" fill="#172033" stroke="#38bdf8"/>
+          <rect x="238" y="64" width="166" height="78" rx="8" fill="#172033" stroke="#d4af37"/>
+          <rect x="420" y="64" width="166" height="78" rx="8" fill="#172033" stroke="#22c55e"/>
+          <text x="74" y="96" fill="#cbd5e1" font-size="18" font-family="Segoe UI, Arial">Calendário</text>
+          <text x="258" y="96" fill="#cbd5e1" font-size="18" font-family="Segoe UI, Arial">Checklist</text>
+          <text x="442" y="96" fill="#cbd5e1" font-size="18" font-family="Segoe UI, Arial">Kanban</text>
+          <g fill="#111827" stroke="#334155">
+            <rect x="54" y="176" width="260" height="154" rx="8"/>
+            <rect x="338" y="176" width="248" height="154" rx="8"/>
+          </g>
+          <g fill="#38bdf8">
+            <circle cx="86" cy="210" r="8"/>
+            <circle cx="126" cy="210" r="8"/>
+            <circle cx="166" cy="210" r="8"/>
+            <circle cx="206" cy="210" r="8"/>
+            <circle cx="246" cy="210" r="8"/>
+          </g>
+          <g fill="#d4af37">
+            <rect x="76" y="248" width="82" height="14" rx="7"/>
+            <rect x="76" y="278" width="174" height="14" rx="7"/>
+            <rect x="76" y="308" width="124" height="14" rx="7"/>
+          </g>
+          <path d="M366 308 L406 238 L454 278 L512 206 L560 250" fill="none" stroke="#22c55e" stroke-width="9" stroke-linecap="round" stroke-linejoin="round"/>
+          <circle cx="512" cy="206" r="12" fill="#d4af37"/>
+        </svg>
+      </div>
+    </section>
+
+    <nav class="manual-nav" aria-label="Sumário">
+      <a href="#primeiros-passos">Primeiros passos<span>Abra, entenda e prepare o painel</span></a>
+      <a href="#tarefas">Tarefas<span>Criar, editar, concluir e excluir</span></a>
+      <a href="#visoes">Visualizações<span>Calendário, Checklist e Kanban</span></a>
+      <a href="#backup">Backup<span>Exportar, importar e restaurar</span></a>
+    </nav>
+
+    <section class="manual-section" id="primeiros-passos">
+      <h2>1. Primeiros passos</h2>
+      <p>
+        Ao abrir o planner pela primeira vez, ele carrega tarefas iniciais ligadas à estratégia AtlasNex.
+        Essas tarefas são salvas no navegador. Isso significa que você pode usar o sistema sem login,
+        sem servidor e sem banco de dados obrigatório.
+      </p>
+      <div class="manual-grid">
+        <article class="manual-step">
+          <span class="step-number">1</span>
+          <div><strong>Abra o painel principal</strong><p>Acesse a página inicial, confirme os KPIs no topo e veja o mês atual no calendário.</p></div>
+        </article>
+        <article class="manual-step">
+          <span class="step-number">2</span>
+          <div><strong>Revise as tarefas iniciais</strong><p>Use o checklist para ajustar datas, categorias e valores conforme sua realidade.</p></div>
+        </article>
+        <article class="manual-step">
+          <span class="step-number">3</span>
+          <div><strong>Execute diariamente</strong><p>Marque conclusões, adicione oportunidades e acompanhe a receita planejada.</p></div>
+        </article>
+      </div>
+      <div class="callout">
+        <strong>Regra prática:</strong>
+        se uma ação ajuda prospecção, produto, entrega, conteúdo, financeiro, marca AtlasNex ou SaaS, ela deve virar tarefa.
+      </div>
+    </section>
+
+    <section class="manual-section" id="tarefas">
+      <h2>2. Como trabalhar com tarefas</h2>
+      <p>
+        Cada tarefa guarda título, data, categoria, prioridade, valor previsto, observações,
+        status de conclusão e etapa Kanban. O objetivo é ligar execução operacional com resultado financeiro.
+      </p>
+      <div class="manual-grid two">
+        <article class="manual-card">
+          <h3>Ação rápida</h3>
+          <p>Use o painel lateral para registrar tarefas simples. Ao salvar, a tarefa aparece no calendário, checklist e Kanban.</p>
+        </article>
+        <article class="manual-card">
+          <h3>Modal completo</h3>
+          <p>Clique em “Nova tarefa” ou em um dia do calendário para preencher observações e escolher uma etapa Kanban.</p>
+        </article>
+      </div>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Campo</th><th>Como usar</th><th>Exemplo</th></tr></thead>
+          <tbody>
+            <tr><td>Título</td><td>Escreva uma ação concreta, começando por verbo quando possível.</td><td>Enviar 10 propostas para clínicas locais</td></tr>
+            <tr><td>Categoria</td><td>Escolha a frente estratégica correspondente.</td><td>Prospecção, Conteúdo, Produto, Entrega, Financeiro, AtlasNex ou SaaS</td></tr>
+            <tr><td>Prioridade</td><td>Use Alta para receita, entrega crítica ou tarefa que destrava outras ações.</td><td>Alta para vender o primeiro Atlas Flow</td></tr>
+            <tr><td>Valor previsto</td><td>Inclua estimativa financeira quando a tarefa puder gerar receita.</td><td>R$ 297 para Diagnóstico Digital Express</td></tr>
+            <tr><td>Observações</td><td>Registre contexto, próximos passos, links ou critérios de conclusão.</td><td>Cliente pediu retorno na sexta-feira com proposta simples</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section class="manual-section" id="visoes">
+      <h2>3. Visualizações do planner</h2>
+      <p>
+        Use calendário para prazo, checklist para execução e Kanban para fluxo.
+      </p>
+      <div class="manual-grid">
+        <article class="manual-card"><h3>Calendário</h3><p>Mostra o mês atual, permite navegar entre meses e criar tarefas clicando em qualquer dia.</p></article>
+        <article class="manual-card"><h3>Checklist</h3><p>Lista as tarefas por data. É a melhor visão para concluir, editar, excluir e filtrar.</p></article>
+        <article class="manual-card"><h3>Kanban</h3><p>Organiza o fluxo em Ideia, A fazer, Em andamento, Concluído e Gerou receita.</p></article>
+      </div>
+      <div class="workflow" aria-label="Fluxo Kanban ilustrado">
+        <span>Ideia</span><span>A fazer</span><span>Em andamento</span><span>Concluído</span><span>Gerou receita</span>
+      </div>
+    </section>
+
+    <section class="manual-section" id="metricas">
+      <h2>4. Indicadores e leitura financeira</h2>
+      <p>Os cards do topo atualizam automaticamente quando você cria, edita, conclui ou exclui tarefas.</p>
+      <div class="manual-grid">
+        <article class="manual-card"><h3>Meta mensal</h3><p>Referência fixa de R$ 10.000/mês para orientar volume e qualidade das ações.</p></article>
+        <article class="manual-card"><h3>Concluídas</h3><p>Mostra a proporção de tarefas feitas e ajuda a acompanhar consistência semanal.</p></article>
+        <article class="manual-card"><h3>Receita planejada</h3><p>Soma valores previstos e separa receita concluída da receita em aberto.</p></article>
+        <article class="manual-card"><h3>Agora</h3><p>Indica a fase estratégica atual: fundação comercial, oferta e primeiros clientes.</p></article>
+        <article class="manual-card"><h3>Atrasadas</h3><p>Conta tarefas abertas com data anterior a hoje. Revise essas tarefas no início do dia.</p></article>
+        <article class="manual-card"><h3>Tarefas da semana</h3><p>Ajuda a medir se a semana tem volume suficiente para gerar oportunidades reais.</p></article>
+      </div>
+    </section>
+
+    <section class="manual-section" id="rotina">
+      <h2>5. Rotina semanal sugerida</h2>
+      <p>A rotina abaixo distribui energia entre aquisição, produto, entrega e planejamento.</p>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Dia</th><th>Foco</th><th>Ações recomendadas</th></tr></thead>
+          <tbody>
+            <tr><td>Segunda</td><td>Prospecção</td><td>Atualizar lista, enviar abordagens, marcar conversas e registrar oportunidades.</td></tr>
+            <tr><td>Terça</td><td>Produto</td><td>Ajustar oferta, preço, escopo, modelo de entrega e materiais comerciais.</td></tr>
+            <tr><td>Quarta</td><td>Reuniões</td><td>Fazer diagnósticos, ouvir dores, registrar objeções e criar próximas tarefas.</td></tr>
+            <tr><td>Quinta</td><td>Conteúdo</td><td>Publicar aprendizados, casos, automações, bastidores e chamadas para conversa.</td></tr>
+            <tr><td>Sexta</td><td>Propostas</td><td>Enviar propostas, cobrar retornos, atualizar valores previstos e fechar entregas.</td></tr>
+            <tr><td>Sábado</td><td>Entrega</td><td>Executar projetos vendidos, documentar processos e transformar repetição em produto.</td></tr>
+            <tr><td>Domingo</td><td>Planejamento</td><td>Revisar KPIs, exportar backup e montar prioridades da próxima semana.</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section class="manual-section" id="backup">
+      <h2>6. Backup, restauração e segurança</h2>
+      <p>
+        Nesta versão, os dados ficam no navegador usando localStorage. Isso deixa o app simples,
+        mas exige backup manual caso você troque de computador, limpe o navegador ou use outro dispositivo.
+      </p>
+      <div class="manual-grid">
+        <article class="manual-step"><span class="step-number">1</span><div><strong>Exportar JSON</strong><p>Clique em “Exportar JSON” para baixar uma cópia das tarefas. Faça isso ao menos uma vez por semana.</p></div></article>
+        <article class="manual-step"><span class="step-number">2</span><div><strong>Importar JSON</strong><p>Use “Importar JSON” para restaurar um backup no mesmo navegador ou em outro computador.</p></div></article>
+        <article class="manual-step"><span class="step-number">3</span><div><strong>Restaurar iniciais</strong><p>Use essa opção para voltar ao conjunto base de tarefas estratégicas. Ela substitui os dados atuais.</p></div></article>
+      </div>
+      <div class="callout"><strong>Importante:</strong> antes de restaurar tarefas iniciais ou limpar dados do navegador, exporte um backup JSON.</div>
+    </section>
+
+    <section class="manual-section" id="supabase">
+      <h2>7. Caminho futuro para nuvem</h2>
+      <p>
+        A arquitetura atual separa armazenamento, tarefas, calendário e inicialização em módulos.
+        Isso facilita evoluir para autenticação e sincronização com Supabase sem reescrever toda a interface.
+      </p>
+      <div class="manual-grid two">
+        <article class="manual-card"><h3>O que muda no futuro</h3><p>O localStorage pode continuar como cache local, enquanto uma tabela `tasks` no Supabase guarda tarefas por usuário.</p></article>
+        <article class="manual-card"><h3>O que permanece</h3><p>A experiência de calendário, checklist, Kanban, filtros, KPIs e backup pode permanecer igual.</p></article>
+      </div>
+    </section>
+
+    <p class="manual-footer">AtlasNex Action Planner · execução diária, dados simples e foco em receita.</p>
+  </main>
+</body>
+</html>
