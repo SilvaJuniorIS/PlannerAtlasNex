@@ -1,71 +1,62 @@
 (function () {
   "use strict";
 
-  const STORAGE_KEY = "atlasnex_action_planner_v1";
+  const STORAGE_KEY = "atlasnex_action_planner_mvp_4_weeks_v2";
 
   const fallbackSeed = [
     {
-      title: "Definir a promessa central da AtlasNex",
-      offsetDays: 0,
+      title: "Semana 1: definir problema, público e promessa do MVP",
+      date: "2026-08-04",
       category: "AtlasNex",
       priority: "high",
       revenue: 0,
-      notes: "Escrever uma frase clara: quem ajudamos, que dor resolvemos e qual resultado entregamos.",
-      stage: "idea"
+      notes: "Registrar o problema principal, o público inicial, a promessa de resultado e o critério de sucesso do MVP AtlasNex.",
+      stage: "todo"
     },
     {
-      title: "Montar lista de 50 potenciais clientes",
-      offsetDays: 1,
+      title: "Escolher a oferta MVP e limitar o escopo",
+      date: "2026-08-06",
+      category: "Produto",
+      priority: "high",
+      revenue: 0,
+      notes: "Definir uma entrega vendável em até 7 dias e deixar fora tudo que não ajuda vender, entregar ou medir resultado.",
+      stage: "todo"
+    },
+    {
+      title: "Semana 2: montar estrutura técnica do MVP",
+      date: "2026-08-11",
+      category: "SaaS",
+      priority: "high",
+      revenue: 0,
+      notes: "Criar telas base, fluxo principal, persistência e checklist de aceite.",
+      stage: "todo"
+    },
+    {
+      title: "Semana 3: convidar 10 pessoas para validar o MVP",
+      date: "2026-08-18",
       category: "Prospecção",
       priority: "high",
       revenue: 0,
-      notes: "Priorizar pequenos negócios locais, prestadores de serviço, clínicas, escritórios, imobiliárias e comércios.",
+      notes: "Enviar convites, fazer entrevistas e registrar objeções, pedidos de ajuste e disposição de pagar.",
       stage: "todo"
     },
     {
-      title: "Criar oferta Diagnóstico Digital Express",
-      offsetDays: 2,
-      category: "Produto",
-      priority: "high",
-      revenue: 297,
-      notes: "Definir escopo, preço, entrega, prazo e modelo de relatório.",
-      stage: "todo"
-    },
-    {
-      title: "Publicar 5 conteúdos sobre IA prática",
-      offsetDays: 3,
-      category: "Conteúdo",
-      priority: "medium",
-      revenue: 0,
-      notes: "Conteúdos simples: antes/depois, automação, bastidor, erro comum e oportunidade.",
-      stage: "doing"
-    },
-    {
-      title: "Vender primeiro projeto Atlas Flow",
-      offsetDays: 7,
-      category: "Entrega",
-      priority: "high",
-      revenue: 2000,
-      notes: "Projeto inicial de automação para WhatsApp, formulário, CRM simples ou atendimento.",
-      stage: "todo"
-    },
-    {
-      title: "Criar planilha de controle financeiro da transição",
-      offsetDays: 8,
+      title: "Semana 4: fechar primeira venda do MVP",
+      date: "2026-08-25",
       category: "Financeiro",
-      priority: "medium",
-      revenue: 0,
-      notes: "Controlar receita, custos, reserva, investimentos e meta mensal.",
+      priority: "high",
+      revenue: 997,
+      notes: "Fazer follow-up ativo nas propostas e buscar pelo menos uma confirmação paga.",
       stage: "todo"
     },
     {
-      title: "Desenhar MVP SaaS a partir dos serviços vendidos",
-      offsetDays: 21,
-      category: "SaaS",
-      priority: "medium",
+      title: "Revisar MVP completo e decidir próximos 30 dias",
+      date: "2026-08-31",
+      category: "AtlasNex",
+      priority: "high",
       revenue: 0,
-      notes: "Somente avançar para SaaS com base em problema validado e repetido.",
-      stage: "idea"
+      notes: "Fechar retrospectiva: o que vender, o que cortar, o que automatizar e qual será a próxima oferta AtlasNex.",
+      stage: "todo"
     }
   ];
 
@@ -155,7 +146,8 @@
   function exportTasks(tasks) {
     const payload = {
       app: "AtlasNex Action Planner",
-      version: 1,
+      version: 2,
+      plan: "MVP completo em 4 semanas",
       exportedAt: new Date().toISOString(),
       tasks: tasks.map(normalizeTask)
     };
@@ -163,7 +155,7 @@
     const url = URL.createObjectURL(blob);
     const link = document.createElement("a");
     link.href = url;
-    link.download = "atlasnex-action-planner-backup.json";
+    link.download = "atlasnex-mvp-4-semanas-backup.json";
     link.click();
     URL.revokeObjectURL(url);
   }

@@ -1,6 +1,6 @@
 # AtlasNex Action Planner
 
-Aplicação web estática para acompanhar o plano de transição da ISJ Representações / AtlasNex rumo a uma renda digital de R$ 10.000 por mês.
+Aplicação web estática para acompanhar um ciclo de MVP completo da ISJ Representações / AtlasNex em 4 semanas, começando em 04/08/2026 e terminando em 31/08/2026.
 
 ## Funcionalidades
 
@@ -14,6 +14,8 @@ Aplicação web estática para acompanhar o plano de transição da ISJ Represen
 - Restauração das tarefas iniciais.
 - PWA básico com `manifest.json` e service worker para uso offline após o primeiro carregamento.
 - Preparado para publicação direta no GitHub Pages.
+- Roteiro inicial com 28 tarefas distribuídas entre descoberta, protótipo, validação e lançamento.
+- Manual detalhado em `manual.html`.
 
 ## Estrutura
 
@@ -62,10 +64,17 @@ Os dados ficam salvos no navegador com a chave:
 atlasnex_action_planner_v1
 ```
 
+A versão atual do ciclo MVP usa:
+
+```js
+atlasnex_action_planner_mvp_4_weeks_v2
+```
+
 Use os botões de exportar e importar JSON para backup ou migração manual entre navegadores.
 
 ## Próximos passos sugeridos
 
+- Fechar a primeira venda do MVP e transformar o aprendizado em versão 2.
 - Criar autenticação e sincronização por usuário com Supabase.
 - Adicionar tabela `tasks` com Row Level Security.
 - Evoluir o dashboard financeiro com pipeline, funil e gráfico mensal.

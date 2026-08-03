@@ -114,6 +114,8 @@
     const overdue = tasks.filter((task) => !task.done && task.date < todayIso).length;
     const weekTasks = tasks.filter((task) => task.date >= weekStartIso && task.date <= weekEndIso).length;
 
+    const planPhase = getMvpPhase(today);
+
     return {
       total: tasks.length,
       done: done.length,
@@ -123,8 +125,46 @@
       openRevenue: plannedRevenue - doneRevenue,
       overdue,
       weekTasks,
-      phase: "Fase 1",
-      focus: "Fundação comercial e primeiros clientes"
+      phase: planPhase.phase,
+      focus: planPhase.focus
+    };
+  }
+
+  function getMvpPhase(today) {
+    const day = AtlasStorage.toISODate(today);
+    if (day < "2026-08-04") {
+      return {
+        phase: "Preparação",
+        focus: "MVP inicia amanhã: 04/08/2026"
+      };
+    }
+    if (day <= "2026-08-10") {
+      return {
+        phase: "Semana 1",
+        focus: "Descoberta, escopo e landing da oferta"
+      };
+    }
+    if (day <= "2026-08-17") {
+      return {
+        phase: "Semana 2",
+        focus: "Protótipo funcional e primeira demonstração"
+      };
+    }
+    if (day <= "2026-08-24") {
+      return {
+        phase: "Semana 3",
+        focus: "Validação com usuários e propostas pagas"
+      };
+    }
+    if (day <= "2026-08-31") {
+      return {
+        phase: "Semana 4",
+        focus: "Primeira venda, entrega real e próximos 30 dias"
+      };
+    }
+    return {
+      phase: "Retrospectiva",
+      focus: "Revisar resultados e planejar o próximo ciclo"
     };
   }
 

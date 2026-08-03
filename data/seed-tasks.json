@@ -1,65 +1,254 @@
 [
   {
-    "title": "Definir a promessa central da AtlasNex",
-    "offsetDays": 0,
+    "title": "Semana 1: definir problema, público e promessa do MVP",
+    "date": "2026-08-04",
     "category": "AtlasNex",
     "priority": "high",
     "revenue": 0,
-    "notes": "Escrever uma frase clara: quem ajudamos, que dor resolvemos e qual resultado entregamos.",
-    "stage": "idea"
+    "notes": "Registrar o problema principal, o público inicial, a promessa de resultado e o critério de sucesso do MVP AtlasNex.",
+    "stage": "todo"
   },
   {
-    "title": "Montar lista de 50 potenciais clientes",
-    "offsetDays": 1,
+    "title": "Mapear 15 dores reais de clientes potenciais",
+    "date": "2026-08-05",
     "category": "Prospecção",
     "priority": "high",
     "revenue": 0,
-    "notes": "Priorizar pequenos negócios locais, prestadores de serviço, clínicas, escritórios, imobiliárias e comércios.",
+    "notes": "Levantar dores em pequenos negócios, prestadores de serviço e contatos próximos. Separar dores por frequência e urgência.",
     "stage": "todo"
   },
   {
-    "title": "Criar oferta Diagnóstico Digital Express",
-    "offsetDays": 2,
+    "title": "Escolher a oferta MVP e limitar o escopo",
+    "date": "2026-08-06",
     "category": "Produto",
     "priority": "high",
-    "revenue": 297,
-    "notes": "Definir escopo, preço, entrega, prazo e modelo de relatório.",
+    "revenue": 0,
+    "notes": "Definir uma entrega vendável em até 7 dias: diagnóstico, automação simples, painel, landing page ou fluxo operacional.",
     "stage": "todo"
   },
   {
-    "title": "Publicar 5 conteúdos sobre IA prática",
-    "offsetDays": 3,
+    "title": "Criar backlog priorizado do MVP",
+    "date": "2026-08-07",
+    "category": "Produto",
+    "priority": "high",
+    "revenue": 0,
+    "notes": "Separar Must Have, Should Have e Later. Tudo que não ajuda vender, entregar ou medir resultado fica fora da versão 1.",
+    "stage": "todo"
+  },
+  {
+    "title": "Desenhar fluxo do usuário e telas principais",
+    "date": "2026-08-08",
+    "category": "Produto",
+    "priority": "medium",
+    "revenue": 0,
+    "notes": "Rascunhar entrada, cadastro, painel, ação principal, exportação e confirmação de resultado.",
+    "stage": "idea"
+  },
+  {
+    "title": "Criar landing page simples da oferta MVP",
+    "date": "2026-08-09",
     "category": "Conteúdo",
     "priority": "medium",
     "revenue": 0,
-    "notes": "Conteúdos simples: antes/depois, automação, bastidor, erro comum e oportunidade.",
-    "stage": "doing"
-  },
-  {
-    "title": "Vender primeiro projeto Atlas Flow",
-    "offsetDays": 7,
-    "category": "Entrega",
-    "priority": "high",
-    "revenue": 2000,
-    "notes": "Projeto inicial de automação para WhatsApp, formulário, CRM simples ou atendimento.",
+    "notes": "Página com promessa, para quem é, entrega, preço inicial, prazo, prova de processo e chamada para conversa.",
     "stage": "todo"
   },
   {
-    "title": "Criar planilha de controle financeiro da transição",
-    "offsetDays": 8,
+    "title": "Publicar resumo da Semana 1 e convite para teste",
+    "date": "2026-08-10",
+    "category": "Conteúdo",
+    "priority": "medium",
+    "revenue": 0,
+    "notes": "Postar bastidor do MVP, problema escolhido e convite para 3 pessoas testarem ou conversarem.",
+    "stage": "todo"
+  },
+  {
+    "title": "Semana 2: montar estrutura técnica do MVP",
+    "date": "2026-08-11",
+    "category": "SaaS",
+    "priority": "high",
+    "revenue": 0,
+    "notes": "Criar estrutura de arquivos, telas base, dados iniciais, fluxo principal e checklist de aceite.",
+    "stage": "todo"
+  },
+  {
+    "title": "Implementar cadastro e edição do item principal",
+    "date": "2026-08-12",
+    "category": "SaaS",
+    "priority": "high",
+    "revenue": 0,
+    "notes": "Construir a função principal do MVP: criar, editar, excluir, listar e salvar dados.",
+    "stage": "todo"
+  },
+  {
+    "title": "Adicionar persistência local e importação/exportação",
+    "date": "2026-08-13",
+    "category": "SaaS",
+    "priority": "high",
+    "revenue": 0,
+    "notes": "Garantir que o usuário não perca dados. Incluir backup JSON quando fizer sentido.",
+    "stage": "todo"
+  },
+  {
+    "title": "Criar painel de métricas do MVP",
+    "date": "2026-08-14",
     "category": "Financeiro",
     "priority": "medium",
     "revenue": 0,
-    "notes": "Controlar receita, custos, reserva, investimentos e meta mensal.",
+    "notes": "Mostrar indicadores simples: quantidade, progresso, valor previsto, status e próximos passos.",
     "stage": "todo"
   },
   {
-    "title": "Desenhar MVP SaaS a partir dos serviços vendidos",
-    "offsetDays": 21,
-    "category": "SaaS",
+    "title": "Testar responsividade em celular",
+    "date": "2026-08-15",
+    "category": "Entrega",
     "priority": "medium",
     "revenue": 0,
-    "notes": "Somente avançar para SaaS com base em problema validado e repetido.",
+    "notes": "Validar leitura, botões, formulários e cards em telas pequenas. Corrigir quebras visuais.",
+    "stage": "todo"
+  },
+  {
+    "title": "Preparar primeira demonstração navegável",
+    "date": "2026-08-16",
+    "category": "Entrega",
+    "priority": "high",
+    "revenue": 0,
+    "notes": "Publicar no GitHub Pages ou ambiente equivalente e criar roteiro de demonstração em 5 minutos.",
+    "stage": "todo"
+  },
+  {
+    "title": "Publicar conteúdo mostrando o protótipo",
+    "date": "2026-08-17",
+    "category": "Conteúdo",
+    "priority": "medium",
+    "revenue": 0,
+    "notes": "Mostrar antes/depois, problema resolvido e chamada para interessados testarem a solução.",
+    "stage": "todo"
+  },
+  {
+    "title": "Semana 3: convidar 10 pessoas para validar o MVP",
+    "date": "2026-08-18",
+    "category": "Prospecção",
+    "priority": "high",
+    "revenue": 0,
+    "notes": "Enviar convite direto para teste ou conversa. Registrar respostas, objeções e pedidos de ajuste.",
+    "stage": "todo"
+  },
+  {
+    "title": "Fazer 3 entrevistas de validação",
+    "date": "2026-08-19",
+    "category": "Prospecção",
+    "priority": "high",
+    "revenue": 0,
+    "notes": "Perguntar rotina atual, custo do problema, solução improvisada, urgência e disposição de pagar.",
+    "stage": "todo"
+  },
+  {
+    "title": "Corrigir fricções encontradas nos testes",
+    "date": "2026-08-20",
+    "category": "Entrega",
+    "priority": "high",
+    "revenue": 0,
+    "notes": "Ajustar apenas o que bloqueia uso, clareza, confiança ou decisão de compra.",
+    "stage": "todo"
+  },
+  {
+    "title": "Criar proposta comercial do MVP",
+    "date": "2026-08-21",
+    "category": "Financeiro",
+    "priority": "high",
+    "revenue": 0,
+    "notes": "Definir preço de entrada, escopo, prazo, bônus, suporte e condições para os primeiros clientes.",
+    "stage": "todo"
+  },
+  {
+    "title": "Enviar 5 propostas pagas",
+    "date": "2026-08-22",
+    "category": "Prospecção",
+    "priority": "high",
+    "revenue": 2500,
+    "notes": "Meta sugerida: 5 propostas de R$ 497 a R$ 997. Registrar valor previsto em cada oportunidade real.",
+    "stage": "todo"
+  },
+  {
+    "title": "Documentar processo de entrega do MVP",
+    "date": "2026-08-23",
+    "category": "Entrega",
+    "priority": "medium",
+    "revenue": 0,
+    "notes": "Criar checklist de onboarding, coleta de dados, configuração, validação, entrega e suporte.",
+    "stage": "todo"
+  },
+  {
+    "title": "Publicar case ou aprendizado da validação",
+    "date": "2026-08-24",
+    "category": "Conteúdo",
+    "priority": "medium",
+    "revenue": 0,
+    "notes": "Compartilhar o que foi aprendido sem expor dados sensíveis. Chamar novos interessados para teste.",
+    "stage": "todo"
+  },
+  {
+    "title": "Semana 4: fechar primeira venda do MVP",
+    "date": "2026-08-25",
+    "category": "Financeiro",
+    "priority": "high",
+    "revenue": 997,
+    "notes": "Fazer follow-up ativo nas propostas e buscar pelo menos uma confirmação paga.",
+    "stage": "todo"
+  },
+  {
+    "title": "Entregar versão 1 para primeiro cliente ou beta",
+    "date": "2026-08-26",
+    "category": "Entrega",
+    "priority": "high",
+    "revenue": 0,
+    "notes": "Instalar, configurar, orientar o usuário e coletar evidências de uso real.",
+    "stage": "todo"
+  },
+  {
+    "title": "Medir resultado e coletar depoimento",
+    "date": "2026-08-27",
+    "category": "Entrega",
+    "priority": "high",
+    "revenue": 0,
+    "notes": "Perguntar o que melhorou, o que travou e qual resultado tangível apareceu nos primeiros dias.",
+    "stage": "todo"
+  },
+  {
+    "title": "Criar página de case e prova social",
+    "date": "2026-08-28",
+    "category": "Conteúdo",
+    "priority": "medium",
+    "revenue": 0,
+    "notes": "Transformar o aprendizado em material comercial: problema, solução, processo e resultado.",
+    "stage": "todo"
+  },
+  {
+    "title": "Planejar versão 2 com base no uso real",
+    "date": "2026-08-29",
+    "category": "Produto",
+    "priority": "medium",
+    "revenue": 0,
+    "notes": "Priorizar melhorias que aumentam venda, entrega ou retenção. Evitar funcionalidades cosméticas.",
     "stage": "idea"
+  },
+  {
+    "title": "Organizar pipeline financeiro do próximo mês",
+    "date": "2026-08-30",
+    "category": "Financeiro",
+    "priority": "high",
+    "revenue": 5000,
+    "notes": "Listar oportunidades abertas, valores prováveis, próximos contatos e meta de fechamento para setembro.",
+    "stage": "todo"
+  },
+  {
+    "title": "Revisar MVP completo e decidir próximos 30 dias",
+    "date": "2026-08-31",
+    "category": "AtlasNex",
+    "priority": "high",
+    "revenue": 0,
+    "notes": "Fechar retrospectiva: o que vender, o que cortar, o que automatizar e qual será a próxima oferta AtlasNex.",
+    "stage": "todo"
   }
 ]
