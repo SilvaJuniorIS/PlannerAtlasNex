@@ -11,6 +11,18 @@
   <link rel="stylesheet" href="css/styles.css" />
 </head>
 <body>
+  <section id="loginPanel" class="login-panel panel" aria-label="Entrar no AtlasNex">
+    <img src="assets/logo-isj.svg" alt="ISJ" width="64" height="64" />
+    <h1>AtlasNex online</h1>
+    <p>Seu planejamento em todos os dispositivos.</p>
+    <form id="loginForm">
+      <label for="loginPassword">Senha do painel</label>
+      <input id="loginPassword" type="password" autocomplete="current-password" required maxlength="1024" />
+      <button class="btn primary" type="submit">Entrar</button>
+    </form>
+    <p id="loginMessage" role="status" aria-live="polite">Conectando…</p>
+  </section>
+  <div id="workspace" hidden>
   <header class="app-header">
     <div class="topbar">
       <a class="brand" href="#" aria-label="AtlasNex Action Planner">
@@ -23,6 +35,8 @@
 
       <div class="header-actions" aria-label="Ações principais">
         <a class="btn" href="manual.html">Manual</a>
+        <button class="btn" id="reloadButton" type="button">Atualizar</button>
+        <button class="btn" id="logoutButton" type="button">Sair</button>
         <button class="btn primary" id="newTaskButton" type="button">Nova tarefa</button>
         <button class="btn" id="exportButton" type="button">Exportar JSON</button>
         <label class="btn file-button" for="importInput">Importar JSON</label>
@@ -33,6 +47,7 @@
   </header>
 
   <main class="shell">
+    <p id="syncStatus" class="sync-status" role="status" aria-live="polite"></p>
     <section class="kpi-grid" aria-label="Indicadores">
       <article class="kpi-card">
         <span>Meta mensal</span>
@@ -224,6 +239,7 @@
     </form>
   </dialog>
 
+  </div>
   <script src="js/storage.js"></script>
   <script src="js/tasks.js"></script>
   <script src="js/calendar.js"></script>

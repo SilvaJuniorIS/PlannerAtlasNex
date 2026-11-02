@@ -114,33 +114,48 @@
     }
   }
 
-  async function loadTasks() {
-    const saved = localStorage.getItem(STORAGE_KEY);
-    if (saved) {
-      try {
-        const parsed = JSON.parse(saved);
-        const savedTasks = Array.isArray(parsed) ? parsed : parsed.tasks;
-        if (Array.isArray(savedTasks)) return savedTasks.map(normalizeTask);
-      } catch (error) {
-        localStorage.removeItem(STORAGE_KEY);
-      }
-    }
+  let revision = null;
 
-    const seedItems = await fetchSeedTasks();
-    const tasks = buildSeedTasks(seedItems);
-    saveTasks(tasks);
+  async function request(path, options = {}) {
+    const response = await fetch(path, {
+      ...options,
+      credentials: "same-origin",
+      cache: "no-store",
+      headers: { "Content-Type": "application/json", ...options.headers }
+    });
+    const data = await response.json().catch(() => ({}));
+    if (!response.ok) {
+      const error = new Error(data.error || "Não foi possível acessar o servidor.");
+      error.status = response.status;
+      throw error;
+    }
+    return data;
+  }
+
+  async function loadTasks() {
+    const plan = await request("/api/tasks");
+    revision = plan.revision;
+    if (plan.tasks !== null) return plan.tasks.map(normalizeTask);
+    const tasks = buildSeedTasks(await fetchSeedTasks());
+    try { await saveTasks(tasks); }
+    catch (error) {
+      if (error.status === 409) return loadTasks();
+      throw error;
+    }
     return tasks;
   }
 
-  function saveTasks(tasks) {
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(tasks.map(normalizeTask)));
+  async function saveTasks(tasks) {
+    if (revision === null) throw new Error("Carregue o plano antes de salvar.");
+    const result = await request("/api/tasks", {
+      method: "PUT",
+      body: JSON.stringify({ tasks: tasks.map(normalizeTask), revision })
+    });
+    revision = result.revision;
   }
 
   async function restoreSeed() {
-    const seedItems = await fetchSeedTasks();
-    const tasks = buildSeedTasks(seedItems);
-    saveTasks(tasks);
-    return tasks;
+    return buildSeedTasks(await fetchSeedTasks());
   }
 
   function exportTasks(tasks) {
@@ -169,7 +184,6 @@
           const importedTasks = Array.isArray(parsed) ? parsed : parsed.tasks;
           if (!Array.isArray(importedTasks)) throw new Error("Formato inválido");
           const tasks = importedTasks.map(normalizeTask).filter((task) => task.title);
-          saveTasks(tasks);
           resolve(tasks);
         } catch (error) {
           reject(error);
@@ -182,6 +196,7 @@
 
   window.AtlasStorage = {
     STORAGE_KEY,
+    request,
     makeId,
     toISODate,
     loadTasks,

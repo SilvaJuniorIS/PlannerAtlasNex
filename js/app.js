@@ -6,6 +6,8 @@
   let activeView = "calendar";
 
   const els = {};
+  let committedTasks = [];
+  let saving = false;
 
   document.addEventListener("DOMContentLoaded", init);
 
@@ -14,9 +16,56 @@
     fillSelects();
     bindEvents();
     els.quickDate.value = AtlasStorage.toISODate(new Date());
-    tasks = await AtlasStorage.loadTasks();
-    renderAll();
+    document.getElementById("loginForm").addEventListener("submit", login);
+    document.getElementById("logoutButton").addEventListener("click", logout);
+    document.getElementById("reloadButton").addEventListener("click", () => location.reload());
     registerServiceWorker();
+    try {
+      const session = await AtlasStorage.request("/api/session");
+      if (session.authenticated) await openPlanner();
+      else showLogin("Entre para acessar suas tarefas online.");
+    } catch (error) { showLogin(error.message); }
+  }
+
+  function showLogin(message) {
+    document.getElementById("workspace").hidden = true;
+    document.getElementById("loginPanel").hidden = false;
+    document.getElementById("loginMessage").textContent = message;
+  }
+
+  async function openPlanner() {
+    tasks = await AtlasStorage.loadTasks();
+    committedTasks = structuredClone(tasks);
+    document.getElementById("loginPanel").hidden = true;
+    document.getElementById("workspace").hidden = false;
+    setStatus("Salvo na nuvem. Recarregue para buscar alterações de outros dispositivos.");
+    renderAll();
+  }
+
+  async function login(event) {
+    event.preventDefault();
+    const button = event.submitter;
+    button.disabled = true;
+    try {
+      await AtlasStorage.request("/api/session", { method: "POST", body: JSON.stringify({ password: document.getElementById("loginPassword").value }) });
+      document.getElementById("loginPassword").value = "";
+      await openPlanner();
+    } catch (error) { showLogin(error.message); }
+    finally { button.disabled = false; }
+  }
+
+  async function logout() {
+    if (saving) return;
+    try {
+      await AtlasStorage.request("/api/session", { method: "DELETE" });
+      tasks = []; committedTasks = [];
+      renderAll();
+      showLogin("Sessão encerrada.");
+    } catch (error) { setStatus(error.message); }
+  }
+
+  function setStatus(message) {
+    document.getElementById("syncStatus").textContent = message;
   }
 
   function cacheElements() {
@@ -168,7 +217,9 @@
   }
 
   function handleTaskAction(event) {
+    if (saving) return;
     const action = event.currentTarget.dataset.action;
+    if (action === "move" && event.type !== "change") return;
     const id = event.currentTarget.dataset.id;
 
     if (action === "toggle") {
@@ -193,6 +244,7 @@
 
   function addQuickTask(event) {
     event.preventDefault();
+    if (saving) return;
     const task = AtlasTasks.createTask({
       title: els.quickTitle.value,
       date: els.quickDate.value,
@@ -211,6 +263,7 @@
 
   function saveModalTask(event) {
     event.preventDefault();
+    if (saving) return;
     const current = tasks.find((task) => task.id === els.taskId.value);
     const task = AtlasTasks.createTask({
       id: els.taskId.value || undefined,
@@ -257,18 +310,19 @@
   }
 
   async function restoreInitialTasks() {
-    if (!confirm("Isso substituirá as tarefas salvas neste navegador pelas tarefas iniciais. Continuar?")) return;
+    if (saving || !confirm("Isso substituirá as tarefas na nuvem, em todos os seus dispositivos, pelas tarefas iniciais. Continuar?")) return;
     tasks = await AtlasStorage.restoreSeed();
-    renderAll();
+    await persistAndRender();
   }
 
   async function importBackup(event) {
+    if (saving) return;
     const file = event.target.files[0];
     if (!file) return;
     try {
+      if (!confirm("Importar substituirá o plano na nuvem em todos os dispositivos. Continuar?")) return;
       tasks = await AtlasStorage.importTasks(file);
-      renderAll();
-      alert("Backup importado com sucesso.");
+      if (await persistAndRender()) alert("Backup salvo na nuvem com sucesso.");
     } catch (error) {
       alert("Não foi possível importar este JSON.");
     } finally {
@@ -276,9 +330,31 @@
     }
   }
 
-  function persistAndRender() {
-    AtlasStorage.saveTasks(tasks);
-    renderAll();
+  async function persistAndRender() {
+    if (saving) return false;
+    saving = true;
+    document.querySelector("main.shell").inert = true;
+    document.querySelector(".header-actions").inert = true;
+    setStatus("Salvando na nuvem…");
+    try {
+      await AtlasStorage.saveTasks(tasks);
+      committedTasks = structuredClone(tasks);
+      setStatus("Salvo na nuvem. Recarregue para buscar alterações de outros dispositivos.");
+      return true;
+    } catch (error) {
+      // Preserve the attempted plan as a downloadable backup before reverting the UI.
+      const attempted = structuredClone(tasks);
+      tasks = structuredClone(committedTasks);
+      setStatus(error.message + " Alteração não salva.");
+      if (confirm(error.message + " A alteração não foi salva. Baixar uma cópia do plano tentado para não perder o trabalho?")) AtlasStorage.exportTasks(attempted);
+      if (error.status === 401) showLogin("Sua sessão expirou. Entre novamente.");
+      return false;
+    } finally {
+      saving = false;
+      document.querySelector("main.shell").inert = false;
+      document.querySelector(".header-actions").inert = false;
+      renderAll();
+    }
   }
 
   function setView(view) {
