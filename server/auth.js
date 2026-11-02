@@ -1,17 +1,23 @@
-const { createHmac, scryptSync, randomBytes } = require('node:crypto');
+const { createHmac, createHash, scryptSync, randomBytes } = require('node:crypto');
 const { equal } = require('./http');
 const COOKIE = 'atlasnex_session';
 function ready() {
   const hash = process.env.ADMIN_PASSWORD_HASH || '';
-  return /^[a-f0-9]{32}:[a-f0-9]{128}$/.test(hash) && (process.env.SESSION_SECRET || '').length >= 32;
+  const password = process.env.ADMIN_PASSWORD || '';
+  const configured = hash ? /^[a-f0-9]{32}:[a-f0-9]{128}$/.test(hash) : password.length >= 16 && password.length <= 1024;
+  return configured && (process.env.SESSION_SECRET || '').length >= 32;
 }
 function hashPassword(password, salt = randomBytes(16).toString('hex')) {
   return `${salt}:${scryptSync(password, salt, 64).toString('hex')}`;
 }
 function validPassword(password) {
   if (!ready() || typeof password !== 'string' || password.length > 1024) return false;
-  const [salt] = process.env.ADMIN_PASSWORD_HASH.split(':');
-  return equal(hashPassword(password, salt), process.env.ADMIN_PASSWORD_HASH);
+  if (process.env.ADMIN_PASSWORD_HASH) {
+    const [salt] = process.env.ADMIN_PASSWORD_HASH.split(':');
+    return equal(hashPassword(password, salt), process.env.ADMIN_PASSWORD_HASH);
+  }
+  const digest = value => createHash('sha256').update(value).digest('hex');
+  return equal(digest(password), digest(process.env.ADMIN_PASSWORD));
 }
 function signature(value) {
   return createHmac('sha256', process.env.SESSION_SECRET).update(value).digest('hex');

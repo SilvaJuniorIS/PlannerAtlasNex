@@ -21,22 +21,13 @@ O comando cria `atlasnex_plan` e `atlasnex_login_attempts`, preserva registros e
 
 ## 3. Configurar o acesso privado
 
-Escolha uma senha única com pelo menos 16 caracteres. Em um terminal Bash confiável, na raiz do projeto, gere o hash sem colocar a senha no histórico:
+Na Vercel, crie `ADMIN_PASSWORD` com uma senha exclusiva de pelo menos 16 caracteres (até 1024). Use o gerador do seu gerenciador de senhas ou o gerador online do Bitwarden. Guarde essa senha: é a senha usada para entrar no painel. Marque a variável como Sensitive, quando disponível, e configure Production.
 
-```bash
-read -rs -p 'Senha do painel: ' ATLAS_PASSWORD
-printf '\n'
-printf '%s' "$ATLAS_PASSWORD" | npm run --silent password:hash
-unset ATLAS_PASSWORD
-```
+Crie `SESSION_SECRET` com outra sequência aleatória de 64 caracteres. Não reutilize a senha do painel. Nenhum desses valores pode ser enviado ao chat ou ao GitHub. Essa configuração é feita inteiramente pelo painel Vercel, sem terminal local.
 
-Guarde o resultado como `ADMIN_PASSWORD_HASH` nas variáveis privadas do projeto Vercel. Não é a senha original. Gere `SESSION_SECRET` com um gerador de segredos; por exemplo, execute localmente:
+O formato avançado `ADMIN_PASSWORD_HASH` continua suportado, mas não é necessário quando `ADMIN_PASSWORD` está configurado. Se ambos existirem, o hash tem prioridade. Use apenas um modo de configuração da senha.
 
-```bash
-node -e "console.log(require('node:crypto').randomBytes(32).toString('hex'))"
-```
-
-Use valores exclusivos deste projeto. Alterar SESSION_SECRET encerra todas as sessões. Para revogar acesso ao trocar a senha, troque também SESSION_SECRET. Sessões duram 12 horas. O login permite até 10 tentativas por endereço em uma janela de 15 minutos, persistidas no banco.
+Alterar SESSION_SECRET encerra todas as sessões. Ao trocar a senha para revogar acesso, troque também SESSION_SECRET. Sessões duram 12 horas. O login permite até 10 tentativas por endereço em uma janela de 15 minutos, persistidas no banco.
 
 ## 4. Criar a Vercel
 
@@ -47,7 +38,7 @@ Em Settings > Environment Variables configure:
 | Nome | Conteúdo privado |
 | --- | --- |
 | DATABASE_URL | Conexão PostgreSQL do Neon com SSL |
-| ADMIN_PASSWORD_HASH | Hash gerado no passo 3 |
+| ADMIN_PASSWORD | Senha exclusiva do painel (mínimo de 16 caracteres) |
 | SESSION_SECRET | Segredo aleatório exclusivo |
 
 Configure Production antes de publicar. Para Preview/Development, use banco/branch Neon separado e outros segredos; não exponha dados de produção em previews. Não prefixe essas variáveis com NEXT_PUBLIC_, VITE_ ou outro prefixo de exposição ao navegador.

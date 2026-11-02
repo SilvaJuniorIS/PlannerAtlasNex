@@ -54,3 +54,31 @@ test('login requires correct password, rate limit and logout clears cookie', asy
   res=response();await sessionHandler(request('DELETE'),res);assert.match(res.headers['Set-Cookie'],/Max-Age=0/);
  } finally { db.loginAllowed=original; }
 });
+
+test('Vercel password configuration accepts correct password and rejects weak configuration', async () => {
+ const hash = process.env.ADMIN_PASSWORD_HASH;
+ const previous = process.env.ADMIN_PASSWORD;
+ const original = db.loginAllowed;
+ delete process.env.ADMIN_PASSWORD_HASH;
+ process.env.ADMIN_PASSWORD = password;
+ db.loginAllowed = async () => true;
+ try {
+  assert.equal(auth.ready(), true);
+  assert.equal(auth.validPassword(password), true);
+  assert.equal(auth.validPassword('wrong'), false);
+  const res = response();
+  await sessionHandler(request('POST', { password }, false), res);
+  assert.equal(res.statusCode, 200);
+  assert.match(res.headers['Set-Cookie'], /HttpOnly/);
+  process.env.ADMIN_PASSWORD = 'short';
+  assert.equal(auth.ready(), false);
+  process.env.ADMIN_PASSWORD = password;
+  process.env.ADMIN_PASSWORD_HASH = 'invalid';
+  assert.equal(auth.ready(), false);
+ } finally {
+  process.env.ADMIN_PASSWORD_HASH = hash;
+  if (previous === undefined) delete process.env.ADMIN_PASSWORD;
+  else process.env.ADMIN_PASSWORD = previous;
+  db.loginAllowed = original;
+ }
+});
