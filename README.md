@@ -38,7 +38,11 @@ Aplicação web estática para acompanhar um ciclo de MVP completo da ISJ Repres
     └── tasks.js
 ```
 
-## Como rodar localmente
+## Versão online: Vercel + Neon
+
+A versão em preparação usa APIs privadas na Vercel e persistência no Neon. Siga [DEPLOY.md](DEPLOY.md) para configurar variáveis, preparar o banco e publicar. Os próximos parágrafos descrevem a versão estática anterior; o fluxo online exige `npm run dev`, não apenas um servidor de arquivos.
+
+## Como rodar a versão estática anterior
 
 Abra a pasta do projeto e sirva os arquivos com um servidor estático:
 

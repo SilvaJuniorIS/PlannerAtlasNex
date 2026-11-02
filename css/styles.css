@@ -667,3 +667,9 @@ a {
     font-size: 0.68rem;
   }
 }
+
+[hidden] { display: none !important; }
+.login-panel { max-width: 440px; margin: 10vh auto; padding: 2rem; }
+.login-panel form { display: grid; gap: 1rem; }
+.login-panel input { width: 100%; padding: .8rem; }
+.sync-status { padding: .75rem 0; }
